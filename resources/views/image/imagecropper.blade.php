@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2 section text-center">
-                <h2>Laravel 9 Crop Image Before Upload Using Cropper JS - CodingSeeker</h2>
+                <h2>Crop Your Image of Required Shape</h2>
                 <input type="file" name="image" class="image">
             </div>
         </div>
