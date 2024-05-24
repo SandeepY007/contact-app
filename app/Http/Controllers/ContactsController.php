@@ -14,7 +14,7 @@ class ContactsController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::where('id', Auth::user()->id)->get();
+        $contacts = Contact::where('user_id', Auth::user()->id)->get();
         return view('contact.index', compact('contacts'));
     }
 
@@ -32,7 +32,7 @@ class ContactsController extends Controller
     public function store(ContactRequest $request)
     {
         $contact = Contact::create($request->validated());
-        return redirect()->route('contacts.index')->with('success_message', 'Contact created successfully.');
+        return redirect()->route('contacts.index')->with('success', 'Contact created successfully.');
     }
 
     /**
@@ -59,7 +59,7 @@ class ContactsController extends Controller
     {
         $contact = Contact::findOrFail($id);
         $contact->update($request->validated());
-        return redirect()->route('contacts.index')->with(['success_message' => 'Contact Deleted Successfully']);
+        return redirect()->route('contacts.index')->with(['success' => 'Contact Deleted Successfully']);
     }
 
     /**
@@ -68,6 +68,6 @@ class ContactsController extends Controller
     public function destroy(string $id)
     {
         Contact::destroy($id);
-        return redirect()->route('contacts.index')->with(['success_message' => 'Contact Deleted Successfully']);
+        return redirect()->route('contacts.index')->with(['success' => 'Contact Deleted Successfully']);
     }
 }
