@@ -26,6 +26,7 @@ class ContactRequest extends FormRequest
             'name' => 'required',
             'email' => 'required',
             'phone' => 'required|min:10',
+            'profile_image' => 'nullable'
         ];
     }
 }

@@ -10,13 +10,15 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="w-full max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
 
-                    <form action="{{ route('contacts.update', $contact->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('contacts.update', $contact->id) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
                         <div class="mb-4">
                             <label for="user_id" class="block text-gray-700 font-bold mb-2">User ID</label>
                             <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                            <input type="text" id="name" name="name" value="{{ old('name', $contact->name) }}"
+                            <input type="text" id="name" name="name"
+                                value="{{ old('name', $contact->name) }}"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('name') border-red-500 @enderror">
                             @error('name')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -24,7 +26,8 @@
                         </div>
                         <div class="mb-4">
                             <label for="phone" class="block text-gray-700 font-bold mb-2">Phone</label>
-                            <input type="text" id="phone" name="phone" value="{{ old('phone', $contact->phone) }}"
+                            <input type="text" id="phone" name="phone"
+                                value="{{ old('phone', $contact->phone) }}"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('phone') border-red-500 @enderror">
                             @error('phone')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -33,7 +36,8 @@
 
                         <div class="mb-4">
                             <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
-                            <input type="email" id="email" name="email" value="{{ old('email', $contact->email) }}"
+                            <input type="email" id="email" name="email"
+                                value="{{ old('email', $contact->email) }}"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('email') border-red-500 @enderror">
                             @error('email')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -44,7 +48,23 @@
                             <input type="file" id="profile_image" name="profile_image"
                                 value="{{ old('profile_image', $contact->profile_image) }}"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('profile_image') border-red-500 @enderror">
+                            <input type="hidden" name="profile_image" value="{{ $contact->profile_image }}"
+                                id="">
                             @error('profile_image')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="mb-4">
+                            <label for="category" class="block text-gray-700 font-bold mb-2">Category</label>
+                            @foreach ($categories as $category)
+                                <label class="inline-flex items-center">
+                                </label>
+                                <input type="checkbox" name="category_id[]"
+                                    {{ $contact->categories->contains($category->id) ? 'checked' : '' }}
+                                    value="{{ $category->id }}" class="form-checkbox h-5 w-5 text-blue-600"><span
+                                    class="ml-2 text-gray-700">{{ $category->name }}</span>
+                            @endforeach
+                            @error('category_id')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>

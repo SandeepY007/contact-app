@@ -22,6 +22,11 @@ class ContactsTable extends Component
         $this->contacts = $this->fetchContacts();
     }
 
+    public function applyFilters()
+    {
+        $this->contacts = $this->fetchContacts();
+    }
+
     protected function fetchContacts()
     {
         return Contact::query()
@@ -42,6 +47,34 @@ class ContactsTable extends Component
         Contact::find($id)->delete();
         $this->contacts = $this->fetchContacts(); // Refresh the contacts list
         session()->flash('success', 'Contact deleted successfully.');
+    }
+
+    public function exportContacts()
+    {
+        $contacts = $this->contacts->toArray();
+        $csvData = $this->arrayToCsv($contacts);
+
+        return response()->streamDownload(function () use ($csvData) {
+            echo $csvData;
+        }, 'contacts.csv');
+    }
+
+    private function arrayToCsv(array $array)
+    {
+        if (count($array) == 0) {
+            return null;
+        }
+
+        $output = fopen('php://temp', 'w');
+        fputcsv($output, array_keys($array[0]));
+        foreach ($array as $row) {
+            fputcsv($output, $row);
+        }
+        rewind($output);
+        $csvData = stream_get_contents($output);
+        fclose($output);
+
+        return $csvData;
     }
 
     public function render()
