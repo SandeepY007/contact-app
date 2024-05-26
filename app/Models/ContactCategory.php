@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ContactCategory extends Model
 {
     use HasFactory;
-    protected $table = 'contact_category';
+protected $table = 'contact_category';
     protected $guarded = [];
     public function contact(){
         return $this->belongsToMany(Contact::class, 'contact_category_map', 'category_id', 'contact_id');

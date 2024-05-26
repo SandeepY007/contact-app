@@ -134,15 +134,4 @@ class ContactsController extends Controller
         Contact::destroy($id);
         return redirect()->route('contacts.index')->with('success', 'Contact deleted successfully.');
     }
-
-    /**
-     * Check if a string is a base64 encoded image.
-     */
-    private function isBase64($string)
-    {
-        if (strpos($string, ';base64,') !== false) {
-            return true;
-        }
-        return false;
-    }
 }
