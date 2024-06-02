@@ -23,6 +23,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/import-contacts', [ImportContactController::class, 'importContacts']);
     Route::get('/update-profile-image/{id}', [CropImageController::class, 'updateProfileImage']);
     Route::post('crop-image-upload-ajax', [CropImageController::class, 'cropImageUploadAjax']);
+    Route::get('/contact-category', [ContactsController::class, 'contactCategory'])->name('contact.by.category');
+    Route::get('/contacts-by-category/{id}', [ContactsController::class, 'contactsByCategory']);
 });
 Route::get('/contact-profile-image/{filename}', function ($filename) {
     $path = public_path('upload/' . $filename);

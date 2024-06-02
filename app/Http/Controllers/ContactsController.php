@@ -134,4 +134,13 @@ class ContactsController extends Controller
         Contact::destroy($id);
         return redirect()->route('contacts.index')->with('success', 'Contact deleted successfully.');
     }
+
+    public function contactCategory(){
+        return view('contact.category');
+    }
+
+    public function contactsByCategory($id){
+        $category = ContactCategory::where('id', $id)->first();
+        return view('contact.contactbycategory', compact('category'));
+    }
 }
